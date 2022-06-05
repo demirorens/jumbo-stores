@@ -1,0 +1,31 @@
+spring:
+  data:
+    #Mongodb connnection configuration
+    mongodb:
+      database: jumbo-stores
+      port: 27017
+      auto-index-creation: true
+# Spring Api documentation configuration
+springdoc:
+  api-docs:
+    path: /jumbo-store-api
+
+#JWT configuration
+jumbo-store:
+  jwtSecret: "jumbo-store"
+  jwtExpirationInMs: 3600000
+
+# Enable all Actuators and not only the two available by default /health and /info starting Spring Boot 2.0
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  security:
+    enabled: false
+
+# Logging
+logging:
+  level:
+    org:
+      springframework: INFO
