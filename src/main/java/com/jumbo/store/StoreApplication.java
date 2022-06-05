@@ -15,15 +15,18 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.Resource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.ResourceUtils;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
@@ -67,6 +70,8 @@ public class StoreApplication {
      * @param roleService
      * @return
      */
+
+
     @Bean
     CommandLineRunner initStoresAndTestUser(JumboStoreService jumboStoreService,
                                             UserService userService,
@@ -106,7 +111,8 @@ public class StoreApplication {
             if (storeCount < 587l) {
                 ObjectMapper mapper = new ObjectMapper();
                 try {
-                    Stores stores = mapper.readValue(ResourceUtils.getFile("classpath:stores.json"), Stores.class);
+                    InputStream in = this.getClass().getClassLoader().getResourceAsStream("stores.json");
+                    Stores stores = mapper.readValue(in.readAllBytes(), Stores.class);
                     jumboStoreService.insertAll(stores.getStores());
                 } catch (IOException e) {
                     e.printStackTrace();

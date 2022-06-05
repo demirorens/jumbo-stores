@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  mongo:
+    image: mongo:latest
+    restart: always
+    container_name: "mongo"
+    ports:
+      - "27017:27017"
+    volumes:
+      - store-mongo-db-data:/var/lib/mongo/data
+
+  jumbo-store-api:
+    build: ./
+    container_name: jumbo-store-api
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATA_MONGODB_HOST=mongo:27017
+      - SPRING_DATA_MONGODB_DATABASE=jumbo-store
+
+volumes:
+  store-mongo-db-data:
+    driver: local
