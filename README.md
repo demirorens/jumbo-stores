@@ -57,7 +57,7 @@ The app will start running at <http://localhost:8080>
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-
+For testing you can use admin (username= "admin", password="123456"), or you can signup new user and than login. To use "near" method of api, first you must login and get access-token. Than you must authorize with using authorize button on sawagger ui, and entering the access-token the token field. 
 To inspect and use for the API just open the swagger-ui with below link
 <http://localhost:8080/swagger-ui.html>
 
